@@ -48,11 +48,9 @@ jobs:
           tf-plan-file: plan.out # This was created in a "terraform plan" step
           cloudrail-api-key: ${{ secrets.CLOUDRAIL_API_KEY }} # This requires registration to Indeni Cloudrail's SaaS at https://web.cloudrail.app
           cloud-account-id: # Leave this empty for Static Analaysis, or provide an account ID for Dynamic Analysis, see instructions in Cloudrail SaaS
+          sarif_file: cloudrail_results.sarif
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
-        # Remember that if issues are found, Cloudrail return non-zero exit code, so the if: always()
-        # is needed to ensure the SARIF file is uploaded
-        if: always() 
         with:
           sarif_file: cloudrail_results.sarif
